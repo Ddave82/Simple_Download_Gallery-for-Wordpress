@@ -1,0 +1,379 @@
+/* ============================================
+   GALERIE GRID LAYOUT
+   ============================================ */
+.sdg-gallery {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100%;
+    margin: 1rem 0;
+}
+
+/* 3 Spalten auf mittleren Bildschirmen */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .sdg-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 2 Spalten auf Tablets */
+@media (min-width: 481px) and (max-width: 767px) {
+    .sdg-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.sdg-item {
+    border: 1px solid #eee;
+    padding: 0.75rem;
+    background: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.sdg-thumb-wrap {
+    flex: 1 1 auto;
+}
+
+.sdg-thumb-wrap img.sdg-thumb {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.sdg-meta {
+    margin-top: 0.75rem;
+}
+
+.sdg-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   BUTTONS: ANSCHAUEN + DOWNLOAD
+   ============================================ */
+.sdg-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.sdg-gallery .sdg-buttons .sdg-view-button,
+.sdg-gallery .sdg-buttons .sdg-download-button {
+    display: inline-block !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    text-decoration: none !important;
+    border-radius: 4px !important;
+    border: 1px solid #ff8c00 !important;
+    background: #ff8c00 !important;
+    background-color: #ff8c00 !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: background 0.15s ease, border-color 0.15s ease !important;
+    flex: 1 1 0;
+    min-width: 0;
+    font-family: inherit;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: none !important;
+}
+
+.sdg-gallery .sdg-buttons .sdg-view-button:hover,
+.sdg-gallery .sdg-buttons .sdg-download-button:hover {
+    background: #e07b00 !important;
+    background-color: #e07b00 !important;
+    border-color: #e07b00 !important;
+    color: #fff !important;
+}
+
+.sdg-gallery .sdg-buttons .sdg-view-button:active,
+.sdg-gallery .sdg-buttons .sdg-download-button:active {
+    background: #cc6d00 !important;
+    background-color: #cc6d00 !important;
+    border-color: #cc6d00 !important;
+}
+
+.sdg-gallery .sdg-buttons .sdg-view-button:focus,
+.sdg-gallery .sdg-buttons .sdg-download-button:focus {
+    outline: 2px solid #ff8c00;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   RESPONSIVE: MOBILE BUTTONS
+   ============================================ */
+@media (max-width: 600px) {
+    .sdg-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .sdg-gallery .sdg-buttons .sdg-view-button,
+    .sdg-gallery .sdg-buttons .sdg-download-button {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .sdg-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   LIGHTBOX OVERLAY & CONTAINER
+   ============================================ */
+.sdg-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sdg-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sdg-lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: sdg-zoom-in 0.3s ease;
+}
+
+@keyframes sdg-zoom-in {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.sdg-lightbox-image {
+    max-width: 100%;
+    max-height: 90vh;
+    display: block;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    user-select: none;
+}
+
+.sdg-lightbox-title {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================
+   LIGHTBOX NAVIGATION: SCHLIESSEN
+   ============================================ */
+.sdg-lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: #ff8c00;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.sdg-lightbox-close:hover {
+    background: #e07b00;
+    transform: rotate(90deg);
+}
+
+.sdg-lightbox-close:active {
+    background: #cc6d00;
+}
+
+.sdg-lightbox-close:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   LIGHTBOX NAVIGATION: VOR/ZURÜCK PFEILE
+   ============================================ */
+.sdg-lightbox-prev,
+.sdg-lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 140, 0, 0.8);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.sdg-lightbox-prev {
+    left: 30px;
+}
+
+.sdg-lightbox-next {
+    right: 30px;
+}
+
+.sdg-lightbox-prev:hover,
+.sdg-lightbox-next:hover {
+    background: rgba(255, 140, 0, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.sdg-lightbox-prev:active,
+.sdg-lightbox-next:active {
+    background: rgba(204, 109, 0, 1);
+}
+
+.sdg-lightbox-prev:disabled,
+.sdg-lightbox-next:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.sdg-lightbox-prev:disabled:hover,
+.sdg-lightbox-next:disabled:hover {
+    transform: translateY(-50%) scale(1);
+    background: rgba(255, 140, 0, 0.8);
+}
+
+.sdg-lightbox-prev:focus,
+.sdg-lightbox-next:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   MOBILE OPTIMIERUNG LIGHTBOX
+   ============================================ */
+@media (max-width: 768px) {
+    .sdg-lightbox-close {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .sdg-lightbox-prev,
+    .sdg-lightbox-next {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .sdg-lightbox-prev {
+        left: 15px;
+    }
+
+    .sdg-lightbox-next {
+        right: 15px;
+    }
+
+    .sdg-lightbox-content {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
+    .sdg-lightbox-image {
+        max-height: 85vh;
+    }
+
+    .sdg-lightbox-title {
+        font-size: 0.9rem;
+        bottom: -35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sdg-lightbox-close {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+
+    .sdg-lightbox-prev,
+    .sdg-lightbox-next {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .sdg-lightbox-prev {
+        left: 10px;
+    }
+
+    .sdg-lightbox-next {
+        right: 10px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & UTILITIES
+   ============================================ */
+.sdg-lightbox button:focus-visible {
+    outline: 3px solid #ff8c00;
+    outline-offset: 3px;
+}
+
+/* Body scroll lock */
+body.sdg-no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
